@@ -9,7 +9,7 @@ This project was generated with :
 ## Get your API keys
 * [Cloud Firestore](https://firebase.google.com/docs/storage/web/start#set_up)
 
-Add for firebae config [here](https://github.com/Prathik-Jain/_coila/blob/cc31867621f7900b7b888d89b1af9a5f66b1c717/src/environments/environment.ts#L9) and [here](https://github.com/Prathik-Jain/_coila/blob/cc31867621f7900b7b888d89b1af9a5f66b1c717/src/environments/environment.prod.ts#L4)
+Add for firebae config [enivironment.ts](https://github.com/Prathik-Jain/_coila/blob/cc31867621f7900b7b888d89b1af9a5f66b1c717/src/environments/environment.ts#L9) and [enivironment.prod.ts](https://github.com/Prathik-Jain/_coila/blob/cc31867621f7900b7b888d89b1af9a5f66b1c717/src/environments/environment.prod.ts#L4)
 * [Google Maps](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
 Insert `apikey` in [app.module.ts](https://github.com/Prathik-Jain/_coila/blob/cc31867621f7900b7b888d89b1af9a5f66b1c717/src/app/app.module.ts#L51)
