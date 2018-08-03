@@ -1,0 +1,187 @@
+<div class="container">
+  <!-- Fixed elements open -->
+
+  <div *ngIf="isNavActive">
+    <app-navigation></app-navigation>
+
+  </div>
+
+  <div class="hamburger"
+    (click)="isNavActive= !isNavActive"
+    [ngClass]="{'is-active': isNavActive}"
+    id="hamburger-cross">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+
+  </div>
+  <!-- Fixed elements open -->
+
+  <!-- Form Container  -->
+
+  <div class="form-container"
+    *ngIf="!isNavActive && isForm">
+
+    <form id="pnrForm"
+      (ngSubmit)="validateAndGetData();">
+      <label class="label-big"
+        *ngIf="isForm">What&apos;s your PNR?</label>
+
+      <input type="tel"
+        pattern="[1-9]\d{9}"
+        minlength="10"
+        maxlength="10"
+        autofocus
+        autocomplete="off"
+        [(ngModel)]="pnr"
+        name="pnr"
+        #pnrValue="ngModel"
+        required>
+
+      <div class="error-message"
+        *ngIf="pnrValue.invalid && (pnrValue.dirty || pnrValue.touched)">
+
+        <div *ngIf="pnrValue?.errors.required">
+          PNR number cannot be empty
+
+        </div>
+
+        <div *ngIf="pnrValue?.errors.pattern">
+          PNR must be a 10 digit number
+
+        </div>
+
+      </div>
+      <button class="submit-fab"
+        *ngIf="!isNavActive"
+        [disabled]="pnrValue.invalid"
+        form="pnrForm"></button>
+    </form>
+
+    <div class="progress-bar"
+      *ngIf="showProgress">
+
+      <div class="progress-bar-value">
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- Form container end -->
+
+  <!-- Data -->
+
+  <div class="content"
+    *ngIf="!isForm && !isNavActive && data">
+
+    <div class="arrow-back"
+      (click)="isForm = !isForm">
+
+    </div>
+
+    <div class="edit-fab"
+      (click)="isForm = !isForm">
+
+    </div>
+
+    <div class="PnrChart">
+      <label id="pnr">{{data.pnr}}</label>
+      <label id="chart"
+        *ngIf="!data.chart_prepared"
+        style="color:#4CAF50">[ Chart Not Prepared ]</label>
+      <label id="chart"
+        *ngIf="data.chart_prepared"
+        style="color:#d50000">[ Chart Prepared ]</label>
+
+    </div>
+
+    <div id="meta-data">
+
+      <div class="col">
+
+        <div class="eve">
+          <label class="lbl">TRAIN :</label>
+          <label class="output">{{data.train.name}}</label>
+
+        </div>
+
+        <div class="eve">
+          <label class="lbl">SOURCE :</label>
+          <label class="output">{{data.from_station.name}} [ {{data.from_station.code}} ]</label>
+
+        </div>
+
+        <div class="eve">
+          <label class="lbl">BOARDING AT :</label>
+          <label class="output">{{data.boarding_point.name}} [ {{data.boarding_point.code}} ]</label>
+
+        </div>
+
+      </div>
+
+      <div class="col">
+
+        <div class="floater">
+
+          <div class="odd">
+            <label class="lbl">DATE OF JOURNEY :</label>
+            <label class="output numbers">{{data.doj}}</label>
+
+          </div>
+
+          <div class="odd">
+            <label class="lbl">DESTINATION :</label>
+            <label class="output">{{data.to_station.name}} [ {{data.to_station.code}} ]</label>
+
+          </div>
+
+          <div class="odd">
+            <label class="lbl">RESERVED UPTO :</label>
+            <label class="output">{{data.reservation_upto.name}} [ {{data.reservation_upto.code}} ]</label>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <table class="bordered-table data-table">
+
+      <tr>
+        <td class="data-table-head">Passenger(s)</td>
+        <td class="data-table-head">Booking Status</td>
+        <td class="data-table-head">Current Status</td>
+      </tr>
+
+      <tr *ngFor="let passenger of data.passengers; let i = index;">
+        <td class="numbers">{{i+1}}</td>
+        <td class="font">{{passenger.booking_status}}</td>
+        <td class="font">
+          <span>{{passenger.current_status}}</span>
+        </td>
+      </tr>
+
+    </table>
+    <app-phone-auth [pnr]="data.pnr"
+      [lastStatus]="data.passengers"></app-phone-auth>
+
+    <table class="abbreviations bordered-table">
+
+      <tr *ngFor="let abr of abbreviations;">
+        <td class="abbr">{{abr.code}}</td>
+        <td class="abbr1">{{abr.value}}</td>
+      </tr>
+
+    </table>
+
+  </div>
+
+  <div id="snackbar"
+    [ngClass]="{'show':showSnack}">{{snackValue}}
+
+  </div>
+
+</div>

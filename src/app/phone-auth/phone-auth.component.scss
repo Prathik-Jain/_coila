@@ -1,0 +1,24 @@
+@import '~variables.scss';
+
+.container {
+  width: 100%;
+  margin: auto 12vw;
+}
+
+.verification-container {
+  width: 100%;
+  margin: auto 20vw;
+}
+
+.button {
+  margin: 5px 30px !important;
+  padding: 8px 20px;
+  font-size: $font-size-large;
+}
+
+.message {
+  width: 100%;
+  margin: auto 13vw;
+  font: $font-size-large $font-weight-bold;
+  color: $black;
+}

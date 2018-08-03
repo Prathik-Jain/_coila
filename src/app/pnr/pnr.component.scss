@@ -1,0 +1,127 @@
+@import '~variables.scss';
+
+.container{
+  height: 100vh;
+  overflow: scroll;
+}
+.form-container{
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 50vw;
+    margin: auto
+  }
+  overflow: hidden;
+}
+input,label{
+  width: 100%;
+}
+
+
+// --  Content --
+
+.content{
+  min-height: 100vh;
+  width:80vw;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+#pnr{
+  display: block;
+  font-family: 'Roboto',sans-serif;
+  font-weight: bold;
+  font-size: $font-size-x-large;
+  color: #454545;
+}
+.PnrChart{
+  display: block;
+  margin: 10vh auto 10vh 0 !important;
+  text-align:center;
+}
+#chart{
+  margin:8% auto;
+  font: $font-size-regular $font-weight-bold $font-family-text;
+}
+
+#meta-data{
+  margin: 25px;
+}
+
+.col{
+ width:50%; 
+ float:left;
+}
+.eve label:nth-of-type(2)::before, .odd label:nth-of-type(2)::before{
+   content: "    ";
+   white-space: pre;
+}
+.eve{
+ padding : 2vh 0vw 2vh 3vw;
+}
+.odd{
+ display:block;
+ padding : 2vh 3vw 2vh 0vw;
+}
+.lbl
+{
+  font: $font-size-regular $font-weight-bold;
+  color: $black;
+}
+.output
+{
+  font: $font-size-regular $font-weight-bold;
+  columns: $black;
+}
+.floater{
+ width: auto;
+ float: right;
+ text-align: left;
+}
+.data-table{
+  width:80%;
+  margin:3vh auto;
+}
+
+@media screen and (min-width:$mobile-min) and (max-width:$mobile-max) {
+.data-table{
+  width: auto;
+}
+}
+
+.data-table-head
+{
+  color: #445544;
+}
+
+table{
+  border: 1px solid hsl(0,0,75);
+  text-align: center;
+  font: $font-size-regular $font-weight-bold;;
+  border-spacing: 0;
+  border-collapse: collapse;
+  td{
+   border-bottom: 1px solid hsl(0,0,75);
+  //  border-left: 1px solid hsl(0, 0, 75);
+    padding: 16px;
+  }
+}
+.abbreviations{
+  margin: 3% auto;
+  border: 1px solid hsl(0,0,75);
+  td{
+    border-left: 1px solid hsl(0,0,75);
+  }
+  .abbr
+  {
+    color: #454545;
+  }
+
+}
+.numbers
+{
+  font-family:$font-family-number !important;
+}

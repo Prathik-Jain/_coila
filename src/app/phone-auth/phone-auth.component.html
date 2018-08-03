@@ -1,0 +1,66 @@
+<div [hidden]="verificationCodeSent"
+  class="container">
+  <label>Send me SMS notification on</label>
+  <span> +91 &nbsp;</span>
+  <input [(ngModel)]="phoneNumber"
+    required
+    type="tel"
+    maxlength="10"
+    minlength="10"
+    pattern="(6|7|8|9)\d{9}"
+    #phNumber="ngModel">
+
+  <div class="error-message"
+    *ngIf="phNumber.invalid && (phNumber.dirty && phNumber.touched)">
+    <div *ngIf="phNumber?.errors.required">
+      This field cannot be empty
+    </div>
+    <div *ngIf="phNumber?.errors.pattern">
+      Please enter a valid phone number
+    </div>
+  </div>
+
+  <button class="button button-light-dark"
+    type="submit"
+    (click)="sendAuthCode()">
+    <span>SUBMIT</span>
+  </button>
+
+</div>
+
+<div class="verification-container"
+  [hidden]="user || !verificationCodeSent">
+
+  <label style="color:#000000">Verification Code</label>
+
+  <input [(ngModel)]="verificationCode"
+    required
+    #otp="ngModel"
+    pattern="\d{6}">
+
+  <div class="error-message"
+    *ngIf="otp.invalid && (otp.dirty && otp.touched)">
+    <div *ngIf="otp?.errors.required">
+      This field cannot be emplty
+    </div>
+    <div *ngIf="otp?.errors.pattern">
+      Please enter the 6 digit OTP recived on your phone
+    </div>
+  </div>
+
+  <button class="button button-light-dark"
+    type="submit"
+    (click)="verifyAuthCode()">
+    <span>Verify</span>
+  </button>
+
+</div>
+
+<div *ngIf="user"
+  class="message">
+  Yaay! You are now subscribed for SMS notification
+</div>
+
+<div id="snackbar"
+  [ngClass]="{'show':showSnack}">{{snackValue}}
+</div>

@@ -1,0 +1,156 @@
+<!-- TODO: Design Sazzy Maps Window -->
+
+<div class="container">
+  <!-- Fixed elements open -->
+
+  <div *ngIf="isNavActive">
+    <app-navigation></app-navigation>
+
+  </div>
+
+  <div class="hamburger"
+    (click)="isNavActive= !isNavActive"
+    [ngClass]="{'is-active': isNavActive}"
+    id="hamburger-cross">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+
+  </div>
+
+  <div id="snackbar"
+    [ngClass]="{'show':showSnack}">{{snackValue}}
+
+  </div>
+  <!-- Fixed elements closed -->
+
+  <!-- Form Container open -->
+
+  <div class="form-container"
+    *ngIf="!isNavActive && isForm">
+
+    <form id="LTSForm"
+      (ngSubmit)="validateAndGetData();">
+
+      <label class="label-big"
+        *ngIf="isForm">What&apos;s the train you want to track?
+      </label>
+
+      <input type="string"
+        [(ngModel)]="train"
+        (ngModelChange)="newSearch(train);"
+        autofocus
+        autocomplete="off"
+        name="train"
+        #trainNumber="ngModel"
+        required>
+
+      <div class="error-message"
+        *ngIf="trainNumber.invalid && (trainNumber.dirty || trainNumber.touched)">
+
+        <div *ngIf="trainNumber?.errors.required">
+          This field cannot be empty
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <input matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="dp"
+          placeholder="Date"
+          [formControl]="date">
+        <mat-datepicker-toggle matSuffix
+          [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker [touchUi]="true"
+          #dp></mat-datepicker>
+
+      </div>
+
+      <button class="submit-fab"></button>
+
+    </form>
+
+    <div class="options-container"
+      *ngIf="autocomplete">
+
+      <div class="option"
+        *ngFor="let result of results | async"
+        (click)="train=result;autocomplete=false;">{{result}}
+
+      </div>
+
+    </div>
+
+    <div class="progress-bar"
+      *ngIf="showProgress">
+
+      <div class="progress-bar-value">
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- Form Container Close -->
+
+  <!-- Data Container -->
+
+  <div *ngIf="!isForm">
+
+    <div class="arrow-back acontainer"
+      (click)="isForm = !isForm">
+
+    </div>
+
+    <div class="edit-fab"
+      (click)="isForm = !isForm">
+
+    </div>
+
+
+    <!-- MAPS -->
+
+    <div class="container"
+      *ngIf=showMap>
+
+      <agm-map [latitude]="lat"
+        [longitude]="lng"
+        [styles]='[{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"poi","elementType":"labels","stylers":[{"saturation":"-100"},{"lightness":"-24"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"all","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","elementType":"all","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]}]'
+    
+        [minZoom]=5
+        [zoom]=7
+        [streetViewControl]=false>
+
+        <ng-container>
+          <agm-polyline *ngFor="let point of polyline"
+            [strokeColor]="'black'"
+            [strokeWeight]=2>
+            <agm-polyline-point *ngFor="let point of polyline"
+              [latitude]="point.lat"
+              [longitude]="point.lng">
+            </agm-polyline-point>
+          </agm-polyline>
+        </ng-container>
+
+        <agm-marker [latitude]="lat"
+          [longitude]="lng">
+          <agm-info-window [isOpen]="infoWindowOpen"
+            [disableAutoPan]="false">
+            <pre>
+              {{editStatus(status.position)}}
+            </pre>
+          </agm-info-window>
+        </agm-marker>
+
+      </agm-map>
+
+    </div>
+
+  </div>
+  <!-- Data container close -->
+
+
+</div>

@@ -1,0 +1,299 @@
+@import '~variables.scss';
+
+
+.container{
+  height: 100vh;
+  max-height: 100vh;
+}
+.form-container{
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    width: 63vw;
+    margin: auto;
+    div{
+      width: 100%;
+    }
+  }
+  overflow: hidden;
+}
+
+.row{
+  display: flex;
+  justify-content: space-between;
+    @media screen and (max-width: $mobile-max) and (min-width:$mobile-min) {
+    display: block;
+    *{
+      width:90%;
+      float: left;
+      margin: 10px auto;
+    }
+    #date-input{
+      width: 80%;
+    }
+    mat-datepicker{
+      margin: 0;
+    }
+    mat-datepicker-toggle{
+      width: auto;
+    }
+  }
+}
+
+
+input{
+  width:70%;
+  float: right;
+  max-width: 620px;
+  margin: 20px 20px;
+  @media screen and (max-width: $mobile-max) and (min-width:$mobile-min) {
+    width: 90%;
+    margin: auto;
+  }
+}
+
+select{
+  width: 70%;
+  float: right;
+  max-width: 620px;
+  margin: 20px 20px;
+  background-color: hsl(0, 0, 95);
+}
+button{
+  justify-self: center;
+  align-self: center;
+}
+
+label{
+  margin:20px 20px;
+}
+.options-container{
+  max-height: 18vh !important;
+}
+
+.data-container{
+  position: absolute;
+  width:100%;
+  height: 100%;
+  
+}
+
+.card{
+  width: 80vw;
+  min-height: 60vh;
+  margin: 10% auto;
+  background-color: white;
+  box-shadow: 0px 2px 50px 0px hsl(0,0,80);
+  overflow: hidden;
+}
+
+.data-head
+{
+  color: white !important;
+  background-color: black !important;
+  font-weight: 600;
+}
+.numbers
+{
+  font-family: Roboto;
+}
+
+.grey
+_{
+  color: #454545;
+}
+.teal
+{
+  cursor:  pointer!important;
+}
+
+
+table {
+  width: 100%;
+  
+  td, th { 
+     color: darken($baseColor, 10%);
+     padding: $padding; 
+  }
+  
+  td {
+     text-align: center;
+     vertical-align: middle;
+     
+     &:last-child {
+        font-size: 0.95em;
+        line-height: 1.4;
+        text-align: left;
+     }
+  }
+  
+  th { 
+     background-color: black;
+     font-weight: bold;
+     color: white;
+  }
+  
+  tr {     
+     &:nth-child(2n) { background-color: white !important; font-family: Roboto; color: black !important; font-weight: 500 !important; }
+     &:nth-child(2n+1) { background-color:white; font-weight: 500 !important; font-family: Roboto;}
+     cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 700px) {   
+  table, tr, td { display: block; }
+  
+  td {
+     &:first-child {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+         width: $imageBig;
+         
+     }
+
+     &:not(:first-child) {
+        clear: both;
+        padding: 4px 20px 4px 90px;
+        position: relative;
+        text-align: left;
+
+        &:before {
+           color: #454545;
+           font-weight: 500;
+           content: '';
+           display: block;
+           left: 0;
+           position: absolute;
+        }
+     }
+
+     &:nth-child(2):before { content: 'Source:'; }
+     &:nth-child(3):before { content: 'Destination:'; }
+     &:nth-child(4):before { content: 'Arrival:'; }
+     &:nth-child(5):before { content: 'Departure:'; }
+     &:nth-child(6):before { content: 'Duration:'; }
+  }
+  
+  tr {
+     padding: $padding 0;
+     position: relative;
+     &:first-child { display: none; }
+  }
+}
+
+@media screen and (max-width: $mobile-max) {
+
+
+  td {
+     &:first-child { 
+        background-color:#00AA8D ; 
+        color: white  !important;
+        font-weight: 600;
+        border-bottom: 2px solid lighten($baseColor, 30%);
+        border-radius: $borderRadius $borderRadius $borderRadius 0;
+        position: relative;   
+        top: 0;
+        transform: translateY(0);
+        width: 100%;
+       
+     }
+     
+     &:not(:first-child) {
+        margin: 5px;
+        padding: 5px 1em;
+        width: 100%;
+        
+        &:before {
+           font-size: .8em;
+           padding-top: 0.3em;
+           position: relative;
+        }
+     }
+     
+     &:last-child  { padding-bottom: 1rem !important; }
+  }
+  
+  tr {
+     background-color: white !important;
+     border-radius: $borderRadius;
+     box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+     margin: 0.5rem 0;
+     padding: 0;
+  }
+  
+  .table-users { 
+     border: none; 
+     box-shadow: none;
+     overflow: visible;
+  }
+}
+.bottom-panel{
+  max-width: 40vw;
+  background-color:#ffffff;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  min-height: 50vh;
+  max-height: 50vh;
+  position: fixed;
+  bottom: -43vh;
+  left:40vw;
+  box-shadow: 4px -8px 32px hsl(0,0,80);
+  overflow: scroll;
+  h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    padding : 4px;
+    color: $black;
+    text-align: center;
+  }
+  .row{
+    color: black;
+    display:flex;
+    justify-content: space-between;
+    margin: 10px 2em !important;
+  }
+  .small-caps{
+    display: block;
+    font-size: $font-size-small;
+    color: #454;
+    text-transform: uppercase;
+    text-align: left;
+    margin: 0 !important;
+  }
+  .meta {
+    text-align: left;
+    font:$font-family-text $font-size-regular $font-weight-bold  !important ;
+    color: $black;
+    margin-left: 0;
+  }
+  .meta-numbers {
+    margin-left: 0;
+    font:$font-family-number $font-size-regular $font-weight-bold  !important;
+    text-align: left;
+  }
+  table {
+    
+    overflow: hidden;
+    width: 100%;
+    th {
+      background-color: $black;;
+      font-weight: bold;
+      color: white;
+      padding: 0;
+    }
+    td 
+    { text-align: center; }
+  }
+}
+.bottom-panel.show-panel{
+  bottom:0vh;
+} 
+@media screen and (min-width:$mobile-min) and (max-width:$mobile-max) {
+  .bottom-panel{
+    width: 90vw;
+  }
+}

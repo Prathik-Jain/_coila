@@ -1,0 +1,39 @@
+$mobile-min:320px;
+$mobile-max:480px;
+$baseColor: rgb(15, 15, 15);
+$borderRadius: 10px;
+$imageBig: 100px;
+$imageSmall: 60px;
+$padding: 10px;
+
+
+
+/* Colors */
+$primary : hsl(0,0,85);
+$primary-dark : hsl(0,0,80);
+$primary-darker :hsl (0,0,51); // #828282
+$black : hsl(0,0,0);
+$white : hsl(0,0,100);
+$background : hsl(0,0,100);
+$text-dark : hsl(0,0,0);
+$text-light : hsl(0,0,100);
+$error : hsl(360,100,50);
+
+
+/* Font */
+
+/* Size */
+$font-size-small : 12px;
+$font-size-regular : 16px;
+$font-size-large : 24px;
+$font-size-x-large : 32px;
+$font-size-xx-large : 48px;
+
+/* Weights */
+$font-weight-light:300;
+$font-weight-regular:	400;
+$font-weight-bold:	600;
+
+/* Families */
+$font-family-text : 'Raleway','Roboto',sans-serif;
+$font-family-number : 'Roboto',sans-serif;

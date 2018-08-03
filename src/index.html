@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Coila</title>
+    <meta name="Author"
+      content="Coila Team">
+    <meta name="keywords"
+      content="pnr status,sms pnr status, live train status, irctc, indian railways,check pnr status">
+    <meta name="description"
+      content="Gives Real Time information about PNR status, Live train status, Seat avialability and Train route">
+    <base href="/">
+    <meta name="viewport"
+      content="width=1024, initial-scale=1">
+    <meta name="theme-color"
+      content="#212121">
+    <link rel="manifest"
+      href="manifest.json">
+
+    <link rel="icon"
+      sizes="192x192"
+      type="image/x-icon"
+      href="favicon.ico">
+    <meta property="og:title"
+      content="Coila" />
+    <meta property="og:description"
+      content="Railway Information System" />
+    <meta property="og:url"
+      content="http://coila.in" />
+    <meta property="og:image"
+      content="favicon.ico" />
+    <link rel="icon"
+      type="image/x-icon"
+      href="favicon.ico">
+    <style>
+      .flex {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .spinner {
+        position: relative;
+        width: 125px;
+        height: 125px;
+      }
+
+      .spinner:before,
+      .spinner:after {
+        content: "";
+        display: block;
+        position: absolute;
+        border-width: 4px;
+        border-style: solid;
+        border-radius: 50%;
+      }
+
+      @-webkit-keyframes scale-2 {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: scale(1);
+          transform: scale(1);
+          opacity: 0;
+        }
+      }
+
+      @keyframes scale-2 {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: scale(1);
+          transform: scale(1);
+          opacity: 0;
+        }
+      }
+
+      .spinner.loading:before {
+        width: 117px;
+        height: 117px;
+        border-color: #212121;
+        top: 0px;
+        left: 0px;
+        -webkit-animation: scale-2 1s linear 0s infinite;
+        animation: scale-2 1s linear 0s infinite;
+      }
+
+      .spinner.loading:after {
+        width: 117px;
+        height: 117px;
+        border-color: #212121;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        -webkit-animation: scale-2 1s linear 0.5s infinite;
+        animation: scale-2 1s linear 0.5s infinite;
+      }
+    </style>
+  </head>
+
+  <body>
+    <app-root>
+
+      <div class="flex">
+
+        <div class="spinner loading">
+
+        </div>
+
+      </div>
+    </app-root>
+    <noscript>
+      <h3 style="margin: 2rem;">
+        Sorry, but app is not available without javascript
+      </h3>
+    </noscript>
+  </body>
+
+</html>

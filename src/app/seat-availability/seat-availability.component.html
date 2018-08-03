@@ -1,0 +1,278 @@
+<div class="container">
+
+  <div *ngIf="isNavActive">
+    <app-navigation></app-navigation>
+
+  </div>
+
+  <div class="hamburger"
+    (click)="isNavActive= !isNavActive"
+    [ngClass]="{'is-active': isNavActive}"
+    id="hamburger-cross">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+
+  </div>
+  <!-- Form Container -->
+
+  <div class="form-container"
+    *ngIf="!isNavActive && isForm">
+
+    <form id="seatForm"
+      (ngSubmit)="validateAndGetData()">
+
+      <div class="row">
+        <label class="label-big">Source</label>
+        <input type="text"
+          list="autoCompleteData"
+          [(ngModel)]="source"
+          (ngModelChange)="newSearch(source,'source');"
+          spellcheck="false"
+          name="train"
+          autocomplete="off"
+          autofocus
+          #sourceStn="ngModel"
+          required>
+
+      </div>
+
+      <div class="error-message row"
+        *ngIf="sourceStn.invalid && (sourceStn.dirty || sourceStn.touched)">
+
+        <div *ngIf="sourceStn?.errors.required">
+          <label>Please enter the source station</label>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <label class="label-big">Destination</label>
+        <input type="text"
+          list="autoCompleteData"
+          [(ngModel)]="destination"
+          (ngModelChange)="newSearch(destination,'dest');"
+          spellcheck="false"
+          name="destination"
+          autocomplete="off"
+          #destStn="ngModel"
+          required>
+
+      </div>
+
+      <div class="error-message row"
+        *ngIf="destStn.invalid && (destStn.dirty || destStn.touched)">
+
+        <div *ngIf="destStn?.errors.required">
+          <label>Please enter your destination</label>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <input matInput
+          id="date-input"
+          class="small-input"
+          [matDatepicker]="dp"
+          [min]="minDate"
+          [max]="maxDate"
+          [formControl]="date"
+          [name]="date"
+          placeholder="Date">
+        <mat-datepicker-toggle matSuffix
+          [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+
+
+
+
+        <select class="small-input"
+          [(ngModel)]="pref_class"
+          type="text"
+          name="class"
+          #class="ngModel"
+          required>
+          <option *ngFor="let class of classes"
+            value={{class.value}}>{{class.viewValue}}</option>
+        </select>
+
+        <select class="small-input"
+          [(ngModel)]="pref_quota"
+          type="text"
+          name="quota"
+          #quota="ngModel"
+          required>
+          <option *ngFor="let quota of quotas"
+            value={{quota.value}}>{{quota.viewValue}}</option>
+        </select>
+
+      </div>
+
+      <div class="error-message"
+        *ngIf="class.invalid && (class.dirty || class.touched)">
+
+        <div *ngIf="class?.errors.required">
+          <label>Please select your preferred class</label>
+
+        </div>
+
+      </div>
+
+      <div class="error-message"
+        *ngIf="quota.invalid && (quota.dirty && quota.touched)">
+
+        <div *ngIf="quota?.errors.required">
+          <label>Please select your preferred quota</label>
+
+        </div>
+
+      </div>
+
+      <div class="options-container"
+        *ngIf="isAutoCompleteOpen">
+
+        <div class="option"
+          *ngFor="let result of results | async"
+          (click)="completeStation(result)">
+          {{result}}
+
+        </div>
+
+      </div>
+      <button class="submit-fab"></button>
+
+    </form>
+
+
+
+  </div>
+
+  <!-- Form Container  Close-->
+
+
+  <!-- Data Container -->
+
+  <div class="data-container"
+    *ngIf="!isForm && !isNavActive">
+
+    <div class="arrow-back acontainer"
+      (click)="isForm = !isForm">
+
+    </div>
+
+    <div class="edit-fab"
+      (click)="isForm = !isForm">
+
+    </div>
+
+    <div class="card">
+      <table class="bordered-table"
+        cell-spacing="0">
+        <tr>
+          <th width="400"
+            class="data-head">Train</th>
+          <th class="data-head">Source</th>
+          <th class="data-head">Destination</th>
+          <th class="data-head">Departure</th>
+          <th class="data-head">Arrival</th>
+          <th class="data-head">Duration</th>
+        </tr>
+        <tr *ngFor="let train of data.trains"
+          (click)="getSeatAvl(train.number, train.from_station.code, train.to_station.code, train.src_departure_time, train.dest_arrival_time, train.travel_time)">
+
+          <td>
+
+            <span class=" teal">{{train.name}}</span>
+            <span class="numbers grey">[ {{train.number}} ] </span>
+          </td>
+          <td>{{train.from_station.name}}</td>
+          <td>{{train.to_station.name}}</td>
+          <td class="numbers">{{train.src_departure_time}}</td>
+          <td class="numbers">{{train.dest_arrival_time}}</td>
+          <td class="numbers">{{train.travel_time}}</td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div class="bottom-panel"
+      *ngIf="showBottomPanel"
+      (click)="showPanel=!showPanel"
+      [ngClass]="{'show-panel':showPanel, '': !showPanel}">
+
+      <div *ngIf="availability">
+        <h3>{{availability.train.name}} [{{availability.train.number}}]</h3>
+
+        <div class="row meta">
+
+          <div>
+            <label class="small-caps">FROM</label>
+            <label class="meta"> {{availability.from_station.name}}</label>
+
+          </div>
+
+          <div>
+            <label class="small-caps">TO</label>
+            <label class="meta"> {{availability.to_station.name}}</label>
+
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div>
+            <label class="small-caps">Departure</label>
+            <label class="meta-numbers">{{departure}}</label>
+
+          </div>
+
+          <div>
+            <label class="small-caps">Arrival</label>
+            <label class="meta-numbers">{{arrival}}</label>
+
+          </div>
+
+          <div>
+            <label class="small-caps">Travel Time</label>
+            <label class="meta-numbers">{{travelTime}}</label>
+
+          </div>
+
+        </div>
+        <table align=center>
+          <tr>
+            <th class="numbers">Date</th>
+            <th>Availability</th>
+          </tr>
+          <tr *ngFor="let availability of availability.availability">
+            <td>{{availability.date}}</td>
+            <td>{{availability.status}}</td>
+          </tr>
+        </table>
+
+      </div>
+
+
+    </div>
+    <!-- Data Container  Close-->
+
+  </div>
+
+
+  <div id="snackbar"
+    [ngClass]="{'show':showSnack}">{{snackValue}}
+
+  </div>
+
+  <div class="progress-bar"
+    *ngIf="showProgress">
+
+    <div class="progress-bar-value">
+
+    </div>
+
+  </div>

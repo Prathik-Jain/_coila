@@ -1,0 +1,12 @@
+<!-- TODO: Change 'Tired?' -->
+<div class="container">
+
+  <label class="label-big">Tired?</label>
+
+  <button class="button button-light-dark "
+    *ngFor="let item of items"
+    routerLink="/{{item.split(' ').join('-').toLowerCase()}}"
+    routerLinkActive="active-link">{{item}}</button>
+
+
+</div>

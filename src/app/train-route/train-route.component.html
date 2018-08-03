@@ -1,0 +1,116 @@
+<div class="container">
+
+  <div *ngIf="isNavActive">
+    <app-navigation></app-navigation>
+
+  </div>
+
+  <div class="hamburger"
+    (click)="isNavActive= !isNavActive"
+    [ngClass]="{'is-active': isNavActive}"
+    id="hamburger-cross">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+
+  </div>
+
+  <div class="form-container"
+    *ngIf="!isNavActive && isForm">
+
+    <form (ngSubmit)="validateAndGetData();">
+      <label class="label-big">What&apos;s your train name | number ?</label>
+      <input type="text"
+        list="autoCompleteData"
+        [(ngModel)]="train"
+        (ngModelChange)="newSearch(train);"
+        spellcheck="false"
+        name="train"
+        #trainNumber="ngModel"
+        autocomplete="off"
+        autofocus
+        required>
+
+      <div class="error-message"
+        *ngIf="trainNumber.invalid && (trainNumber.dirty || trainNumber.touched)">
+
+        <div *ngIf="trainNumber?.errors.required">
+          Please select a train
+
+        </div>
+
+      </div>
+      <button class="submit-fab"></button>
+    </form>
+    <!-- Progress Bar -->
+
+    <div class="progress-bar"
+      *ngIf="showProgress">
+
+      <div class="progress-bar-value">
+
+      </div>
+
+    </div>
+    <!-- Progress bar end -->
+
+    <div *ngIf="autocomplete"
+      class="options-container">
+
+      <div class="option"
+        *ngFor="let result of results | async"
+        (click)="train=result;autocomplete=false;">{{result}}
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="loading-data"
+    *ngIf="!isForm && !isNavActive">
+
+    <div class="arrow-back acontainer"
+      (click)="isForm = !isForm">
+
+    </div>
+
+    <div class="edit-fab"
+      (click)="isForm = !isForm">
+
+    </div>
+
+    <div class="content">
+
+      <div class="card">
+        <table class="bordered-table">
+          <tr class="header">
+            <td>Number</td>
+            <td>Station</td>
+            <td>Arrival</td>
+            <td>Departure</td>
+            <td>Distance</td>
+          </tr>
+          <tr *ngFor="let route of data.route">
+            <td class="numbers">{{route.no}}</td>
+            <td> {{route.station.name}} [ {{route.station.code}} ]
+              <br />
+              <span style="color:#00AA8D">Day {{route.day}}</span>
+            </td>
+            <td class="numbers">{{route.scharr}} </td>
+            <td class="numbers">{{route.schdep}}</td>
+            <td>
+              <span class="numbers">{{route.distance}}</span> Km(s)</td>
+          </tr>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="snackbar"
+    [ngClass]="{'show':showSnack}">{{snackValue}}
+
+  </div>
